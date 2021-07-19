@@ -1,0 +1,24 @@
+package beryanov.controller;
+
+import beryanov.dto.QuoteDto;
+import beryanov.service.QuoteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping(path = "/quote")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
+public class QuoteController {
+    private final QuoteService quoteService;
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public QuoteDto add(@Valid @RequestBody QuoteDto quoteDto) {
+        return quoteService.addQuote(quoteDto);
+    }
+}
