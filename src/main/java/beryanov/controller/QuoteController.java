@@ -18,7 +18,7 @@ public class QuoteController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public QuoteDto add(@Valid @RequestBody QuoteDto quoteDto) {
+    public QuoteDto addQuote(@Valid @RequestBody QuoteDto quoteDto) {
         return quoteService.addQuote(quoteDto);
     }
 }

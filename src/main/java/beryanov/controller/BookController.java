@@ -1,6 +1,7 @@
 package beryanov.controller;
 
 import beryanov.dto.BookDto;
+import beryanov.dto.ObjectIdHolder;
 import beryanov.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,5 +28,11 @@ public class BookController {
     @PostMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAll() {
         return bookService.getAllBooks();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void remove(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
+        bookService.removeBook(objectIdHolder.getId());
     }
 }

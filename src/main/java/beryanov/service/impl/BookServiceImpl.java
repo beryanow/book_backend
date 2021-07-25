@@ -1,6 +1,7 @@
 package beryanov.service.impl;
 
 import beryanov.dto.BookDto;
+import beryanov.exception.book.UnavailableBookException;
 import beryanov.mapper.BookMapper;
 import beryanov.model.Book;
 import beryanov.repository.BookRepository;
@@ -36,6 +37,21 @@ public class BookServiceImpl implements BookService {
         log.info("Добавлена книга: {}", bookAddedDto);
 
         return bookAddedDto;
+    }
+
+    @Override
+    public void removeBook(String bookId) {
+        Optional<Book> probableExistingBook = bookRepository.findById(bookId);
+
+        if (probableExistingBook.isEmpty()) {
+            throw new UnavailableBookException(bookId);
+        }
+
+        Book bookToDelete = probableExistingBook.get();
+
+        bookRepository.delete(bookToDelete);
+
+        log.info("Удалена книга: {}", bookMapper.toDto(bookToDelete));
     }
 
     @Override
