@@ -6,7 +6,12 @@ import beryanov.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,19 +25,19 @@ public class BookController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto add(@Valid @RequestBody BookDto bookDto) {
+    public BookDto addBook(@Valid @RequestBody BookDto bookDto) {
         return bookService.addBook(bookDto);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BookDto> getAll() {
+    public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void remove(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
+    public void removeBook(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
         bookService.removeBook(objectIdHolder.getId());
     }
 }

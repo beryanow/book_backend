@@ -4,6 +4,7 @@ import beryanov.dto.BookDto;
 import beryanov.exception.book.UnavailableBookException;
 import beryanov.mapper.BookMapper;
 import beryanov.model.Book;
+import beryanov.model.State;
 import beryanov.repository.BookRepository;
 import beryanov.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,24 @@ public class BookServiceImpl implements BookService {
         }
 
         Book bookToAdd = bookMapper.toEntity(bookDto);
+
+        State readState = new State();
+        readState.setBooksRead(List.of(bookToAdd));
+
+        State readingState = new State();
+        readingState.setBooksReading(List.of(bookToAdd));
+
+        State toReadState = new State();
+        toReadState.setBooksToRead(List.of(bookToAdd));
+
+        State favouriteState = new State();
+        favouriteState.setBooksFavourite(List.of(bookToAdd));
+
+        bookToAdd.setRead(readState);
+        bookToAdd.setReading(readingState);
+        bookToAdd.setToRead(toReadState);
+        bookToAdd.setFavourite(favouriteState);
+
         Book bookAdded = bookRepository.save(bookToAdd);
         BookDto bookAddedDto = bookMapper.toDto(bookAdded);
 

@@ -3,47 +3,48 @@ package beryanov.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Quote {
+public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(unique = true, nullable = false)
     private String id;
 
-    @Column(nullable = false)
-    private String content;
+    @Column
+    private boolean flag;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date createdDate;
 
-    @UpdateTimestamp
-    @Temporal(TemporalType.DATE)
-    @Column
-    private Date lastUpdatedDate;
+    @OneToMany(mappedBy = "read")
+    private List<Book> booksRead;
 
-    @ToString.Exclude
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    private Book book;
+    @OneToMany(mappedBy = "reading")
+    private List<Book> booksReading;
+
+    @OneToMany(mappedBy = "toRead")
+    private List<Book> booksToRead;
+
+    @OneToMany(mappedBy = "favourite")
+    private List<Book> booksFavourite;
 }

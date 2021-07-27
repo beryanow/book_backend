@@ -1,6 +1,5 @@
 package beryanov.dto;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +20,10 @@ public class BookDto {
     private String author;
     @NotBlank
     private String fileName;
+    private StateDto read;
+    private StateDto reading;
+    private StateDto toRead;
+    private StateDto favourite;
     private List<QuoteDto> quotes;
+    private CritiqueDto critique;
 }
