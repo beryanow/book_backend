@@ -42,6 +42,18 @@ public class BookController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-read", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> getAllBooksRead() {
+        return bookService.getAllBooksRead();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-reading", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> getAllBooksReading() {
+        return bookService.getAllBooksReading();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/get-all-to-read", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAllBooksToRead() {
         return bookService.getAllBooksToRead();

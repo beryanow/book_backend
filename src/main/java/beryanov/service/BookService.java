@@ -9,6 +9,8 @@ public interface BookService {
     List<BookDto> addAllBooks(List<BookDto> bookDtoList);
     void removeBook(String bookId);
     List<BookDto> getAllBooks();
+    List<BookDto> getAllBooksRead();
+    List<BookDto> getAllBooksReading();
     List<BookDto> getAllBooksToRead();
     List<BookDto> getAllBooksFavourite();
 }

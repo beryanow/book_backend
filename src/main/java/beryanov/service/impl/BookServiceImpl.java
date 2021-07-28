@@ -96,11 +96,31 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> getAllBooksRead() {
+        List<Book> bookReadFoundList = bookRepository.findBooksRead();
+        List<BookDto> bookReadFoundListDto = bookMapper.toDtoList(bookReadFoundList);
+
+        log.info("Найдены прочитанные книги: {}", bookReadFoundListDto);
+
+        return bookReadFoundListDto;
+    }
+
+    @Override
+    public List<BookDto> getAllBooksReading() {
+        List<Book> bookReadingFoundList = bookRepository.findBooksReading();
+        List<BookDto> bookReadingFoundListDto = bookMapper.toDtoList(bookReadingFoundList);
+
+        log.info("Найдены текущие книги: {}", bookReadingFoundListDto);
+
+        return bookReadingFoundListDto;
+    }
+
+    @Override
     public List<BookDto> getAllBooksToRead() {
         List<Book> bookToReadFoundList = bookRepository.findBooksToRead();
         List<BookDto> bookToReadFoundListDto = bookMapper.toDtoList(bookToReadFoundList);
 
-        log.info("Найдены прочитанные книги: {}", bookToReadFoundListDto);
+        log.info("Найдены желанные книги: {}", bookToReadFoundListDto);
 
         return bookToReadFoundListDto;
     }
