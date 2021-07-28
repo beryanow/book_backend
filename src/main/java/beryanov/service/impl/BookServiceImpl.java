@@ -46,6 +46,25 @@ public class BookServiceImpl implements BookService {
         State favouriteState = new State();
         favouriteState.setBooksFavourite(List.of(bookToAdd));
 
+        switch (bookDto.getStateOption()) {
+            case FAVOURITE -> {
+                favouriteState.setFlag(true);
+                log.info("Добавляемая книга будет помечена избранной");
+            }
+            case READ -> {
+                readState.setFlag(true);
+                log.info("Добавляемая книга будет помечена прочитанной");
+            }
+            case READING -> {
+                readingState.setFlag(true);
+                log.info("Добавляемая книга будет помечена текущей");
+            }
+            case TO_READ -> {
+                toReadState.setFlag(true);
+                log.info("Добавляемая книга будет помечена желанной");
+            }
+        }
+
         bookToAdd.setRead(readState);
         bookToAdd.setReading(readingState);
         bookToAdd.setToRead(toReadState);

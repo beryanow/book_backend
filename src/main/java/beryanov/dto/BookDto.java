@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
+import beryanov.enumeration.StateOption;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +28,5 @@ public class BookDto {
     private StateDto favourite;
     private List<QuoteDto> quotes;
     private CritiqueDto critique;
+    private StateOption stateOption;
 }

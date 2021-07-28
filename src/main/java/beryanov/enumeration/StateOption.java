@@ -4,5 +4,6 @@ public enum StateOption {
     READ,
     READING,
     TO_READ,
-    FAVOURITE
+    FAVOURITE,
+    NOT_SET
 }

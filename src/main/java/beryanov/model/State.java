@@ -3,6 +3,7 @@ package beryanov.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -36,15 +37,19 @@ public class State {
     @Column(nullable = false)
     private Date createdDate;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "read")
     private List<Book> booksRead;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "reading")
     private List<Book> booksReading;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "toRead")
     private List<Book> booksToRead;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "favourite")
     private List<Book> booksFavourite;
 }
