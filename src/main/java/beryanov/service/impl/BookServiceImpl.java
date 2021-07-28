@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +60,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> addAllBooks(List<BookDto> bookDtoList) {
+        List<BookDto> savedBooks = new ArrayList<>();
+
+        for (BookDto bookDto : bookDtoList) {
+            savedBooks.add(addBook(bookDto));
+        }
+
+        return savedBooks;
+    }
+
+    @Override
     public void removeBook(String bookId) {
         Optional<Book> probableExistingBook = bookRepository.findById(bookId);
 
@@ -81,5 +93,15 @@ public class BookServiceImpl implements BookService {
         log.info("Найдены книги: {}", bookFoundListDto);
 
         return bookFoundListDto;
+    }
+
+    @Override
+    public List<BookDto> getAllBooksToRead() {
+        List<Book> bookToReadFoundList = bookRepository.findBooksToRead();
+        List<BookDto> bookToReadFoundListDto = bookMapper.toDtoList(bookToReadFoundList);
+
+        log.info("Найдены прочитанные книги: {}", bookToReadFoundListDto);
+
+        return bookToReadFoundListDto;
     }
 }

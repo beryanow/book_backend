@@ -29,10 +29,22 @@ public class BookController {
         return bookService.addBook(bookDto);
     }
 
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping(path = "/add-all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> addAllBooks(@Valid @RequestBody List<BookDto> bookDtoList) {
+        return bookService.addAllBooks(bookDtoList);
+    }
+
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-to-read", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> getAllBooksToRead() {
+        return bookService.getAllBooksToRead();
     }
 
     @ResponseStatus(value = HttpStatus.OK)
