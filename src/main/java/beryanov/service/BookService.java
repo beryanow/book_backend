@@ -10,4 +10,5 @@ public interface BookService {
     void removeBook(String bookId);
     List<BookDto> getAllBooks();
     List<BookDto> getAllBooksToRead();
+    List<BookDto> getAllBooksFavourite();
 }

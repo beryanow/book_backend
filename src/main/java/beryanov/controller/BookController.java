@@ -48,6 +48,12 @@ public class BookController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-favourite", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> getAllBooksFavourite() {
+        return bookService.getAllBooksFavourite();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
     public void removeBook(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
         bookService.removeBook(objectIdHolder.getId());

@@ -104,4 +104,14 @@ public class BookServiceImpl implements BookService {
 
         return bookToReadFoundListDto;
     }
+
+    @Override
+    public List<BookDto> getAllBooksFavourite() {
+        List<Book> bookFavouriteFoundList = bookRepository.findBooksFavourite();
+        List<BookDto> bookFavouriteFoundListDto = bookMapper.toDtoList(bookFavouriteFoundList);
+
+        log.info("Найдены избранные книги: {}", bookFavouriteFoundListDto);
+
+        return bookFavouriteFoundListDto;
+    }
 }
