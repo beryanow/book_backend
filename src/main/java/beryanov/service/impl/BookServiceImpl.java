@@ -53,6 +53,7 @@ public class BookServiceImpl implements BookService {
             }
             case READ -> {
                 readState.setFlag(true);
+                readState.setRating("0");
                 log.info("Добавляемая книга будет помечена прочитанной");
             }
             case READING -> {

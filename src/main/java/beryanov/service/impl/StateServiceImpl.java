@@ -29,23 +29,34 @@ public class StateServiceImpl implements StateService {
         }
 
         Book existingBook = probableExistingBook.get();
-
         StateOption stateOption = StateOption.valueOf(stateDto.getOption());
+
         boolean stateFlag = stateDto.isFlag();
+        String rating = stateDto.getRating();
 
         switch (stateOption) {
             case READ -> {
                 existingBook.getRead().setFlag(stateFlag);
+                existingBook.getRead().setRating(rating);
+
+                if (!"0".equals(rating)) {
+                    log.info("Выставлена оценка: {} книге с id: {}", rating, bookId);
+                }
+
                 existingBook.getReading().setFlag(false);
                 existingBook.getToRead().setFlag(false);
             }
             case READING -> {
                 existingBook.getRead().setFlag(false);
+                existingBook.getRead().setRating("0");
+
                 existingBook.getReading().setFlag(stateFlag);
                 existingBook.getToRead().setFlag(false);
             }
             case TO_READ -> {
                 existingBook.getRead().setFlag(false);
+                existingBook.getRead().setRating("0");
+
                 existingBook.getReading().setFlag(false);
                 existingBook.getToRead().setFlag(stateFlag);
             }

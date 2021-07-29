@@ -17,6 +17,7 @@ public class StateDto {
     private boolean flag;
     @NotBlank
     private String option;
+    private String rating;
     @NotBlank
     private String bookId;
     private Date createdDate;

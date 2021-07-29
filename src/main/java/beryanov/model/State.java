@@ -32,6 +32,9 @@ public class State {
     @Column
     private boolean flag;
 
+    @Column(length = 1)
+    private String rating;
+
     @UpdateTimestamp
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
