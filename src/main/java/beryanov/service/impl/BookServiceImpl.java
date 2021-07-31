@@ -130,6 +130,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> getAllBooksCritiqued() {
+        List<Book> bookFoundList = bookRepository.findAll();
+        List<Book> bookFoundListCritiqued = bookFoundList.stream()
+                .filter(book -> book.getCritique() != null && book.getCritique().getContent() != null && book.getCritique().getContent().length() != 0)
+                .collect(Collectors.toList());
+        List<BookDto> bookFoundListCritiquedDto = bookMapper.toDtoList(bookFoundListCritiqued);
+
+        log.info("Найдены книги с резенциями: {}", bookFoundListCritiquedDto);
+
+        return bookFoundListCritiquedDto;
+    }
+
+    @Override
     public List<BookDto> getAllBooksRead() {
         List<Book> bookReadFoundList = bookRepository.findBooksRead();
         List<BookDto> bookReadFoundListDto = bookMapper.toDtoList(bookReadFoundList);
