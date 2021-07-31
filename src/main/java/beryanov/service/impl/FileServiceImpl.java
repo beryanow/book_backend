@@ -6,9 +6,16 @@ import beryanov.exception.file.UnavailableFileException;
 import beryanov.service.FileService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import nu.pattern.OpenCV;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +51,8 @@ public class FileServiceImpl implements FileService {
                 log.info("Загружен файл: " + name);
             }
 
+            blurAndSave(uploadedFile);
+
             return name;
         } else {
             throw new EmptyFileException();
@@ -65,5 +74,36 @@ public class FileServiceImpl implements FileService {
         log.info("Скачан файл: " + fileName);
 
         return documentBody;
+    }
+
+    private void blurAndSave(File uploadedFile) {
+        OpenCV.loadLocally();
+
+        Mat notBlurredImage = Imgcodecs.imread(uploadedFile.getAbsolutePath());
+        Mat toBeBlurredImage = new Mat(300, 300, notBlurredImage.type());
+        Mat blurredResizedImage = new Mat();
+
+        Imgproc.GaussianBlur(notBlurredImage, toBeBlurredImage, new Size(99,99),49);
+        Imgproc.resize(toBeBlurredImage, blurredResizedImage, new Size(300, 300));
+
+        int extensionDotIndex = uploadedFile.getAbsolutePath().lastIndexOf(".");
+        String fullPath = uploadedFile.getAbsolutePath();
+        String path = fullPath.substring(0, extensionDotIndex);
+        String extension = fullPath.substring(extensionDotIndex);
+        String finalBlurPath = path + "_blur" + extension;
+
+        File blurredFile = new File(finalBlurPath);
+        boolean isBlurredFileExisted = blurredFile.exists();
+
+        Imgcodecs.imwrite(finalBlurPath, blurredResizedImage);
+
+        int fileNameSlashIndex = finalBlurPath.lastIndexOf("/") + 1;
+        String blurredName = finalBlurPath.substring(fileNameSlashIndex);
+
+        if (isBlurredFileExisted) {
+            log.info("Перезаписан файл размытого изображения: " + blurredName);
+        } else {
+            log.info("Создан файл размытого изображения: " + blurredName);
+        }
     }
 }

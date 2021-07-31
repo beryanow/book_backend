@@ -42,6 +42,12 @@ public class BookController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-quoted", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookDto> getAllBooksQuoted() {
+        return bookService.getAllBooksQuoted();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/get-all-read", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAllBooksRead() {
         return bookService.getAllBooksRead();

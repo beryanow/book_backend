@@ -30,7 +30,7 @@ public class Critique {
     @Column(unique = true, nullable = false)
     private String id;
 
-    @Column(nullable = false, length = 4096)
+    @Column(nullable = false, length = 4095)
     private String content;
 
     @CreationTimestamp

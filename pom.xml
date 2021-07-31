@@ -19,6 +19,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <h2.version>1.4.200</h2.version>
         <postgres.version>42.2.23</postgres.version>
+        <opencv.version>4.5.1-2</opencv.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openpnp</groupId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}</version>
         </dependency>
     </dependencies>
 

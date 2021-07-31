@@ -1,5 +1,6 @@
 package beryanov.service.impl;
 
+import beryanov.dto.ExtendedQuoteDto;
 import beryanov.dto.QuoteDto;
 import beryanov.exception.book.UnavailableBookException;
 import beryanov.mapper.QuoteMapper;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +44,15 @@ public class QuoteServiceImpl implements QuoteService {
         log.info("Добавлена цитата: {}", quoteAddedDto);
 
         return quoteAddedDto;
+    }
+
+    @Override
+    public List<ExtendedQuoteDto> getAllQuotes() {
+        List<Quote> quoteFoundList = quoteRepository.findAll();
+        List<ExtendedQuoteDto> extendedQuoteFoundListDto = quoteMapper.toExtendedDtoList(quoteFoundList);
+
+        log.info("Найдены цитаты: {}", extendedQuoteFoundListDto);
+
+        return extendedQuoteFoundListDto;
     }
 }

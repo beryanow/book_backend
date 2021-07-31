@@ -30,7 +30,7 @@ public class Quote {
     @Column(unique = true, nullable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 4095)
     private String content;
 
     @CreationTimestamp

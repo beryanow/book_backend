@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -113,6 +114,19 @@ public class BookServiceImpl implements BookService {
         log.info("Найдены книги: {}", bookFoundListDto);
 
         return bookFoundListDto;
+    }
+
+    @Override
+    public List<BookDto> getAllBooksQuoted() {
+        List<Book> bookFoundList = bookRepository.findAll();
+        List<Book> bookFoundListQuoted = bookFoundList.stream()
+                .filter(book -> book.getQuotes() != null && book.getQuotes().size() != 0)
+                .collect(Collectors.toList());
+        List<BookDto> bookFoundListQuotedDto = bookMapper.toDtoList(bookFoundListQuoted);
+
+        log.info("Найдены книги с цитатами: {}", bookFoundListQuotedDto);
+
+        return bookFoundListQuotedDto;
     }
 
     @Override
