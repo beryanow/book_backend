@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -140,6 +141,17 @@ public class BookServiceImpl implements BookService {
         log.info("Найдены книги с резенциями: {}", bookFoundListCritiquedDto);
 
         return bookFoundListCritiquedDto;
+    }
+
+    @Override
+    public Map<String, List<BookDto>> getAllAuthorGroupedBooks() {
+        List<Book> bookFoundList = bookRepository.findAll();
+        Map<String, List<BookDto>> bookListAuthorGrouped = bookFoundList.stream()
+                .collect(Collectors.groupingBy(Book::getAuthor, Collectors.mapping(bookMapper::toDto, Collectors.toList())));
+
+        log.info("Найдены сгруппированные по авторам книги: {}", bookListAuthorGrouped);
+
+        return bookListAuthorGrouped;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class State {
     private String rating;
 
     @UpdateTimestamp
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date createdDate;
 

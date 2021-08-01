@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/book")
@@ -63,6 +64,12 @@ public class BookController {
     @PostMapping(path = "/get-all-reading", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAllBooksReading() {
         return bookService.getAllBooksReading();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/get-all-author-grouped", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, List<BookDto>> getAllAuthorGroupedBooks() {
+        return bookService.getAllAuthorGroupedBooks();
     }
 
     @ResponseStatus(value = HttpStatus.OK)
