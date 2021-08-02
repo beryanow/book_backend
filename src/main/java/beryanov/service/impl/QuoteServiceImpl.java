@@ -1,10 +1,14 @@
 package beryanov.service.impl;
 
+import beryanov.dto.CritiqueDto;
 import beryanov.dto.ExtendedQuoteDto;
 import beryanov.dto.QuoteDto;
 import beryanov.exception.book.UnavailableBookException;
+import beryanov.exception.critique.UnavailableCritiqueException;
+import beryanov.exception.quote.UnavailableQuoteException;
 import beryanov.mapper.QuoteMapper;
 import beryanov.model.Book;
+import beryanov.model.Critique;
 import beryanov.model.Quote;
 import beryanov.repository.BookRepository;
 import beryanov.repository.QuoteRepository;
@@ -54,5 +58,38 @@ public class QuoteServiceImpl implements QuoteService {
         log.info("Найдены цитаты: {}", extendedQuoteFoundListDto);
 
         return extendedQuoteFoundListDto;
+    }
+
+    @Override
+    public QuoteDto editQuote(QuoteDto quoteDto) {
+        String quoteId = quoteDto.getId();
+        Optional<Quote> probableExistingQuote = quoteRepository.findById(quoteId);
+
+        if (probableExistingQuote.isEmpty()) {
+            throw new UnavailableQuoteException(quoteId);
+        }
+
+        Quote quoteToEdit = probableExistingQuote.get();
+        quoteToEdit.setContent(quoteDto.getContent());
+
+        QuoteDto quoteEditedDto = quoteMapper.toDto(quoteRepository.save(quoteToEdit));
+
+        log.info("Изменена цитата: {}", quoteEditedDto);
+
+        return quoteEditedDto;
+    }
+
+    @Override
+    public void removeQuote(String quoteId) {
+        Optional<Quote> probableExistingQuote = quoteRepository.findById(quoteId);
+
+        if (probableExistingQuote.isEmpty()) {
+            throw new UnavailableQuoteException(quoteId);
+        }
+
+        Quote quoteToDelete = probableExistingQuote.get();
+        quoteRepository.delete(quoteToDelete);
+
+        log.info("Удалена цитата: {}", quoteMapper.toDto(quoteToDelete));
     }
 }

@@ -1,6 +1,7 @@
 package beryanov.controller;
 
 import beryanov.dto.CritiqueDto;
+import beryanov.dto.ObjectIdHolder;
 import beryanov.service.CritiqueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,17 @@ public class CritiqueController {
     @PostMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CritiqueDto> getAllCritiques() {
         return critiqueService.getAllCritiques();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/edit", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CritiqueDto editCritique(@Valid @RequestBody CritiqueDto critiqueDto) {
+        return critiqueService.editCritique(critiqueDto);
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void removeCritique(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
+        critiqueService.removeCritique(objectIdHolder.getId());
     }
 }

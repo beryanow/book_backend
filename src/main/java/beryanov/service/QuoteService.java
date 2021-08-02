@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuoteService {
     QuoteDto addQuote(QuoteDto quoteDto);
     List<ExtendedQuoteDto> getAllQuotes();
+    QuoteDto editQuote(QuoteDto quoteDto);
+    void removeQuote(String quoteId);
 }

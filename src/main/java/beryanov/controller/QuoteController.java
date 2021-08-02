@@ -1,6 +1,8 @@
 package beryanov.controller;
 
+import beryanov.dto.CritiqueDto;
 import beryanov.dto.ExtendedQuoteDto;
+import beryanov.dto.ObjectIdHolder;
 import beryanov.dto.QuoteDto;
 import beryanov.service.QuoteService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +35,17 @@ public class QuoteController {
     @PostMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ExtendedQuoteDto> getAllQuotes() {
         return quoteService.getAllQuotes();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/edit", produces = MediaType.APPLICATION_JSON_VALUE)
+    public QuoteDto editQuote(@Valid @RequestBody QuoteDto quoteDto) {
+        return quoteService.editQuote(quoteDto);
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping(path = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void removeQuote(@Valid @RequestBody ObjectIdHolder objectIdHolder) {
+        quoteService.removeQuote(objectIdHolder.getId());
     }
 }

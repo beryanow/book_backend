@@ -3,10 +3,13 @@ package beryanov.service.impl;
 import beryanov.dto.BookDto;
 import beryanov.dto.CritiqueDto;
 import beryanov.exception.book.UnavailableBookException;
+import beryanov.exception.critique.UnavailableCritiqueException;
+import beryanov.exception.quote.UnavailableQuoteException;
 import beryanov.mapper.BookMapper;
 import beryanov.mapper.CritiqueMapper;
 import beryanov.model.Book;
 import beryanov.model.Critique;
+import beryanov.model.Quote;
 import beryanov.repository.BookRepository;
 import beryanov.repository.CritiqueRepository;
 import beryanov.service.CritiqueService;
@@ -72,5 +75,38 @@ public class CritiqueServiceImpl implements CritiqueService {
         log.info("Найдены цитаты: {}", critiqueFoundListDto);
 
         return critiqueFoundListDto;
+    }
+
+    @Override
+    public CritiqueDto editCritique(CritiqueDto critiqueDto) {
+        String critiqueId = critiqueDto.getId();
+        Optional<Critique> probableExistingCritique = critiqueRepository.findById(critiqueId);
+
+        if (probableExistingCritique.isEmpty()) {
+            throw new UnavailableCritiqueException(critiqueId);
+        }
+
+        Critique critiqueToEdit = probableExistingCritique.get();
+        critiqueToEdit.setContent(critiqueDto.getContent());
+
+        CritiqueDto critiqueEditedDto = critiqueMapper.toDto(critiqueRepository.save(critiqueToEdit));
+
+        log.info("Изменена рецензия: {}", critiqueEditedDto);
+
+        return critiqueEditedDto;
+    }
+
+    @Override
+    public void removeCritique(String critiqueId) {
+        Optional<Critique> probableExistingCritique = critiqueRepository.findById(critiqueId);
+
+        if (probableExistingCritique.isEmpty()) {
+            throw new UnavailableCritiqueException(critiqueId);
+        }
+
+        Critique critiqueToDelete = probableExistingCritique.get();
+        critiqueRepository.delete(critiqueToDelete);
+
+        log.info("Удалена рецензия: {}", critiqueMapper.toDto(critiqueToDelete));
     }
 }

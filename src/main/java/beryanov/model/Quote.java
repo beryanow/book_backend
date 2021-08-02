@@ -44,6 +44,6 @@ public class Quote {
     private Date lastUpdatedDate;
 
     @ToString.Exclude
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Book book;
 }

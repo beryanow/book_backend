@@ -44,6 +44,6 @@ public class Critique {
     private Date lastUpdatedDate;
 
     @ToString.Exclude
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false)
     private Book book;
 }
