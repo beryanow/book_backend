@@ -1,5 +1,6 @@
 package beryanov.service.impl;
 
+import beryanov.dto.ChangeContentDto;
 import beryanov.dto.CritiqueDto;
 import beryanov.dto.ExtendedQuoteDto;
 import beryanov.dto.QuoteDto;
@@ -61,8 +62,8 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public QuoteDto editQuote(QuoteDto quoteDto) {
-        String quoteId = quoteDto.getId();
+    public QuoteDto editQuote(ChangeContentDto changeContentDto) {
+        String quoteId = changeContentDto.getId();
         Optional<Quote> probableExistingQuote = quoteRepository.findById(quoteId);
 
         if (probableExistingQuote.isEmpty()) {
@@ -70,7 +71,7 @@ public class QuoteServiceImpl implements QuoteService {
         }
 
         Quote quoteToEdit = probableExistingQuote.get();
-        quoteToEdit.setContent(quoteDto.getContent());
+        quoteToEdit.setContent(changeContentDto.getContent());
 
         QuoteDto quoteEditedDto = quoteMapper.toDto(quoteRepository.save(quoteToEdit));
 

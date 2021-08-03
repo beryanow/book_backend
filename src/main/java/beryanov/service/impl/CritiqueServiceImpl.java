@@ -1,6 +1,7 @@
 package beryanov.service.impl;
 
 import beryanov.dto.BookDto;
+import beryanov.dto.ChangeContentDto;
 import beryanov.dto.CritiqueDto;
 import beryanov.exception.book.UnavailableBookException;
 import beryanov.exception.critique.UnavailableCritiqueException;
@@ -78,8 +79,8 @@ public class CritiqueServiceImpl implements CritiqueService {
     }
 
     @Override
-    public CritiqueDto editCritique(CritiqueDto critiqueDto) {
-        String critiqueId = critiqueDto.getId();
+    public CritiqueDto editCritique(ChangeContentDto changeContentDto) {
+        String critiqueId = changeContentDto.getId();
         Optional<Critique> probableExistingCritique = critiqueRepository.findById(critiqueId);
 
         if (probableExistingCritique.isEmpty()) {
@@ -87,7 +88,7 @@ public class CritiqueServiceImpl implements CritiqueService {
         }
 
         Critique critiqueToEdit = probableExistingCritique.get();
-        critiqueToEdit.setContent(critiqueDto.getContent());
+        critiqueToEdit.setContent(changeContentDto.getContent());
 
         CritiqueDto critiqueEditedDto = critiqueMapper.toDto(critiqueRepository.save(critiqueToEdit));
 

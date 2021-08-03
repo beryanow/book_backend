@@ -1,5 +1,6 @@
 package beryanov.controller;
 
+import beryanov.dto.ChangeContentDto;
 import beryanov.dto.CritiqueDto;
 import beryanov.dto.ObjectIdHolder;
 import beryanov.service.CritiqueService;
@@ -37,8 +38,8 @@ public class CritiqueController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(path = "/edit", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CritiqueDto editCritique(@Valid @RequestBody CritiqueDto critiqueDto) {
-        return critiqueService.editCritique(critiqueDto);
+    public CritiqueDto editCritique(@Valid @RequestBody ChangeContentDto changeContentDto) {
+        return critiqueService.editCritique(changeContentDto);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
