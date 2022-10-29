@@ -30,4 +30,4 @@ jobs:
     - name: Push Docker Image
       run: docker push msberyanov/book-library-backend
     - name: Pull Image On Server
-      run: ssh -t root@5.101.50.241 "docker run -p 8080:8080 msberyanov/book-library-backend; exit"
+      run: ssh -t root@5.101.50.241 "docker stop $(docker ps -a -q); docker run -p 8080:8080 msberyanov/book-library-backend; exit"
