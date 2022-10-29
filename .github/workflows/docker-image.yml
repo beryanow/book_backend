@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build And Push Book Library Backend Docker Image
 
 on:
   push:
