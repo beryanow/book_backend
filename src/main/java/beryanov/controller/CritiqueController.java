@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/critique")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://5.53.124.106:8080"})
 @RequiredArgsConstructor
 public class CritiqueController {
     private final CritiqueService critiqueService;

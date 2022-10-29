@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/book")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://5.53.124.106:8080"})
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
