@@ -13,3 +13,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag msberyanov/book-library-backend
+    - name: Push the Docker image
+      run: docker push msberyanov/book-library-backend
