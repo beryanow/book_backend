@@ -19,7 +19,7 @@ jobs:
     - name: Add Known Hosts
       run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
     - name: Login To Server
-      run: ssh -t root@5.101.50.241 exit 
+      run: ssh -t root@${{ secrets.SSH_HOST }} exit 
     - name: Build Docker Image
       run: docker build . --file Dockerfile --tag msberyanov/book-library-backend
     - name: Login To Docker Hub
@@ -30,4 +30,4 @@ jobs:
     - name: Push Docker Image
       run: docker push msberyanov/book-library-backend
     - name: Pull Image On Server
-      run: ssh -t root@5.101.50.241 "docker stop $(docker ps -a -q); docker run -p 8080:8080 msberyanov/book-library-backend; exit"
+      run: ssh -t root@${{ secrets.SSH_HOST }} "docker ps -aq | xargs docker stop | xargs docker rm; docker run -p 8080:8080 msberyanov/book-library-backend; exit"
