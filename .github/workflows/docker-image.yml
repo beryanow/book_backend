@@ -32,5 +32,6 @@ jobs:
     - name: Pull image on server
       run: >
         ssh -T root@${{ secrets.SSH_HOST }} "docker ps -aq | xargs docker stop | xargs docker rm; 
+        docker pull msberyanov/book-library-backend;
         docker run -d -p 8080:8080 msberyanov/book-library-backend;
         exit"
